@@ -1,6 +1,5 @@
 const User = require("../Model/User");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const generateTokenAndSetCookie = require("../utils/getToken");
 
 // signup / register user
@@ -47,7 +46,7 @@ const Register = async (req, res) => {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
-// =====================================================================
+
 // login
 const Login = async (req, res) => {
   const { username, password } = req.body;
@@ -69,7 +68,7 @@ const Login = async (req, res) => {
   }
 };
 
-// =======================================================================
+
 // logout
 const Logout = async (req, res) => {
   try {
