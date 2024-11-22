@@ -31,18 +31,17 @@ const sendMessage = async (req, res) => {
       message,
     });
 
-    // Save the message to the database
-    //await newMessage.save();
-
     // Add the new message to the conversation's messages array
     conversation.messages.push(newMessage._id);
 
-    // Save the updated conversation
+    // SOCKET
+
+    //await newMessage.save();
     // await conversation.save();
 
     // this will run in parallel
     await Promise.all([conversation.save(), newMessage.save()]);
-    // Respond with the new message
+
     res
       .status(201)
       .json({ msg: `Message sent by ${senderId}`, message: newMessage });
@@ -52,6 +51,32 @@ const sendMessage = async (req, res) => {
   }
 };
 
+// get all the messages
+const getMessage = async (req, res) => {
+  const { id: userToChatId } = req.params;
+  const senderId = req.user._id;
+
+  try {
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, userToChatId] },
+    }).populate("messages") // display messages only from conversation
+   
+    if(!conversation){
+      return res.status(200).json([])
+    }
+    else {
+      const messages = conversation.messages
+      res.status(200).json(messages);
+    }
+    
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+};
+
 module.exports = {
   sendMessage,
+  getMessage,
 };

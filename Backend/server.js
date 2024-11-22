@@ -7,7 +7,8 @@ require('./Database/conn')
 // routes
 const authRoute = require('./routes/authRoutes')
 const messageRoute = require('./routes/messageRoutes');
-const conversationRoute = require('./routes/conversationRoute');
+
+const userRoute = require('./routes/userRoutes');
 
 const app = express()
 
@@ -16,7 +17,7 @@ app.use(cookieParser())
 
 app.use('/api/auth',authRoute);
 app.use('/api/message',messageRoute);
-app.use('/api/conversation',conversationRoute);
+app.use('/api/users',userRoute)
 
 app.get('/', (req,res) => {
     res.send('Welcome socket app')
