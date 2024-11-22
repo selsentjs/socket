@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BsSend } from "react-icons/bs";
 const MessageInput = () => {
   return (
