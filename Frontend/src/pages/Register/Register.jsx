@@ -14,14 +14,14 @@ const Register = () => {
   });
 
   // submit form
-  const submitForm = async(e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-    console.log(data)
-    await register(data) // from hooks
+    console.log(data);
+    await register(data); // from hooks
   };
 
   // use useRegister hook here
-  const {loading, register} = useRegister()
+  const { loading, register } = useRegister();
   // checkbox changes
   const handleCheckboxChange = (gender) => {
     setData({ ...data, gender });
@@ -96,7 +96,13 @@ const Register = () => {
             Already have an account?
           </Link>
           <div>
-            <button className="btn btn-block btn-sm mt-2">Register</button>
+            <button
+              className="btn btn-block btn-sm mt-2 border border-slate-700"
+              disabled={loading}
+            >
+              {loading ? <span className="loading loading-spinner"></span>: "Register"}
+             
+            </button>
           </div>
         </form>
       </div>
